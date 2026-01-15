@@ -2,15 +2,8 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
-const ProductCard =({image, title})=>{
-  return(
-    <div className='product-card'>
-      <img src={image} alt={title} className='product-img'/>
-      <span>{title}</span>
-    </div>
-  )
-}
+import {ProductCard} from './components/ProductCard';
+import { PageContainer } from './components/pageContainer';
 
 const PAGE_SIZE=10;
 
@@ -47,18 +40,16 @@ function App() {
 
   return !products.length? (<h1>No product founds</h1>) : (
     <>
-      <div className="app">
-        <h1>Pagination</h1>
-        <div className='pagination-container'>
-          <button disabled={currentPage===0} className='arrow-ponter' onClick={gotoPreviousPage}>◀</button>
-          {[...Array(totalPages).keys()].map((n)=>(<button onClick={()=>handleClick(n)} className={'page-number'+(currentPage===n?' active':'')} key={n}>{n}</button>))}
-          <button disabled={currentPage===totalPages-1} className='arrow-ponter' onClick={gotoNextPage}>▶</button>
-        </div>
-        <div className='product-container'>
-        {products.slice(start, end).map((p)=><ProductCard key={p.id} image={p.thumbnail} title={p.title} />)}
-        </div>
-        
-      </div>
+      <PageContainer
+        currentPage={currentPage}
+        totalPages={totalPages}
+        products={products}
+        start={start}
+        end={end}
+        handleClick={handleClick}
+        gotoPreviousPage={gotoPreviousPage}
+        gotoNextPage={gotoNextPage}
+      />
     </>
   )
 }
