@@ -24,3 +24,24 @@
   border:1px solid black;
   cursor: pointer;
 }
+
+.pagination-container{
+  margin: 5px;
+  padding: 5px;
+}
+
+.app{
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.arrow-ponter{
+  cursor: pointer;
+  padding: 2px;
+  margin: 2px;
+  border:1px solid black;
+}
+
+.active{
+  background-color: lightblue;
+}

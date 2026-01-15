@@ -18,7 +18,6 @@ function App() {
   const [products, setporducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); 
 
-
   const fetchData = async()=>{
     const data = await fetch("https://dummyjson.com/products?limit=200");
     const json = await data.json();
@@ -38,12 +37,23 @@ function App() {
     setCurrentPage(n)
   }
 
+  const gotoPreviousPage=()=>{
+    setCurrentPage((prev)=>prev-1)
+  }
+
+  const gotoNextPage=()=>{
+    setCurrentPage((prev)=>prev+1)
+  }
 
   return !products.length? (<h1>No product founds</h1>) : (
     <>
-      <div>
+      <div className="app">
         <h1>Pagination</h1>
-        <div >{[...Array(totalPages).keys()].map((n)=>(<span onClick={()=>handleClick(n)} className='page-number' key={n}>{n}</span>))}</div>
+        <div className='pagination-container'>
+          <button disabled={currentPage===0} className='arrow-ponter' onClick={gotoPreviousPage}>◀</button>
+          {[...Array(totalPages).keys()].map((n)=>(<button onClick={()=>handleClick(n)} className={'page-number'+(currentPage===n?' active':'')} key={n}>{n}</button>))}
+          <button disabled={currentPage===totalPages-1} className='arrow-ponter' onClick={gotoNextPage}>▶</button>
+        </div>
         <div className='product-container'>
         {products.slice(start, end).map((p)=><ProductCard key={p.id} image={p.thumbnail} title={p.title} />)}
         </div>
